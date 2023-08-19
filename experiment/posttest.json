@@ -1,39 +1,7 @@
-{
-  "version": 2.0,
-  "questions": [
-    {
-      "question": "This is a Sample Question 1?",
-      "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
-      },
-      "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
-      },
-      "correctAnswer": "a",
-      "difficulty": "beginner"
-    },
-    {
-      "question": "This is a Sample Question 2?",
-      "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
-      },
-      "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
-      },
-      "correctAnswer": "c",
-      "difficulty": "beginner"
-    }
-  ]
-}
+[{"question":"A reflex klystron is oscillating at the frequency of its resonant cavity. If the reflector voltage is made slightly less negative, the","answers":{"a":"Oscillation will cease","b":"Output power would increase","c":"The frequency will decrease","d":"Bunching would occur earlier in time"},"correctAnswer":"c"},
+{"question":"The coarse frequency adjustment of a reflex klystron is accomplished by","answers":{"a":"The AFC system","b":"Adjusting the flexible wall of the resonant cavity","c":"An adjustment in the synchronizer","d":"Varying the repeller voltage"},"correctAnswer":"b"},
+{"question":"The main frequency determining element of a klystron is","answers":{"a":"The repeller voltage","b":"The accelerating voltage","c":"Its resonant cavity","d":"Its mode of operation"},"correctAnswer":"c"},
+{"question":"The reflex klystron is often preferred to the two-cavity klystron oscillator because the former","answers":{"a":"is more efficient","b":"has higher number of modes","c":"is easier to tune","d":"produces a higher output power"},"correctAnswer":"c"},
+{"question":"Reflex klystron is used in_____.","answers":{"a":"Oscillator","b":"Mixer","c":"Frequency multiplier","d":"None of these"},"correctAnswer":"a"}]
+
+
