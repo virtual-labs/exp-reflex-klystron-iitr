@@ -2,7 +2,7 @@
 
    "details": [
        {
-			"Experiment": "To study the Characteristics of Reflex Klystron.",     
+			"Experiment": "Characteristics of Reflex Klystron.",     
 			"Lab": "Microwave Engineering",               
 			"Discipline": "",				 
 			"Technology": "HTML, JavaScript, CSS"         
@@ -17,28 +17,28 @@
        }
    ],
 
-   "contributer": [
+   "contributor": [
        
        {       
-			"Contributer": "Rajeev Kumar",              
+			"Contributor": "Rajeev Kumar",              
       "Institute": "Indian Institute of Technology Roorkee, Roorkee",               
 			"InstituteAcronym": "IITR"         
        },
 
        {       
-			"Contributer": "Nipun Jain",             
+			"Contributor": "Nipun Jain",             
       "Institute": "Indian Institute of Technology Roorkee, Roorkee",               
 			"InstituteAcronym": "IITR"         
        },
 
        {       
-			"Contributer": "Piyush Rawat",             
+			"Contributor": "Piyush Rawat",             
       "Institute": "Indian Institute of Technology Roorkee, Roorkee",               
 			"InstituteAcronym": "IITR"         
        },
 
        {       
-      "Contributer": "Pragya Daksh",             
+      "Contributor": "Pragya Daksh",             
       "Institute": "Indian Institute of Technology Roorkee, Roorkee",               
       "InstituteAcronym": "IITR"         
        }

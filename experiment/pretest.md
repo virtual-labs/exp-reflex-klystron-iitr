@@ -6,7 +6,7 @@ Q1. ______ is a single cavity klystron tube that operates as on oscillator by us
 
 A   Backward wave oscillator<br>
 <b>B   Reflex klystron</b><br>
-C   Travelling wave tube<br>
+C   Traveling wave tube<br>
 D   Magnetrons<br><br>
 
 
@@ -26,17 +26,17 @@ C   High source power<br>
 D   Design complexity<br><br>
 
 
-Q4. Which of the following is one of the mode in Reflex Klystron<br>
+Q4. Reflex klystron is used in_____.<br>
   
-<b>A   Give same frequency but different transit time</b><br>
-B   Are caused by spurious frequency modulation<br>
-C   Are just for theoretical consideration<br>
-D   Result from excessive transit time across resonator gap<br><br>
+<b>A Oscillator</b><br>
+B Mixer<br>
+C Frequency Multiplier<br>
+D None of the above<br><br>
 
 
-Q5. Klystron oscillators are most often used in the frequency range of<br>
+Q5. The main frequency determining element of a klystron is<br>
 
-A   300 to 3000 MHz<br>
-<b>B   3000 to 30000 MHz</b><br>
-C   30 to 30000 MHz<br>
-D   10 to 10000 MHz<br><br>
+A The repeller voltage<br>
+B The accelerating voltage<br>
+<b>C Its resonant cavity</b><br>
+D Its mode of operation<br><br>
