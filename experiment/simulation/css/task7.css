@@ -36,7 +36,7 @@ html,body{
    width: 200px;
    visibility: hidden; 
    margin-left: 105px;
-    margin-top: -250px;
+    margin-top: -260px;
  }
  #block1{
    width: 10px;
@@ -283,8 +283,8 @@ color: #0f69cd;
 
 #jog_dial_one,#jog_dial_two {
   position: relative;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   margin: 5px auto;
   background: #0f69cd;
   -webkit-border-radius: 150px;
@@ -293,6 +293,10 @@ color: #0f69cd;
   -o-border-radius: 150px;
   border-radius: 150px;
 } 
+
+#jog_dial_one,#jog_dial_two{
+  cursor:not-allowed
+}
 #jog_dial_3,#jog_dial_4,#jog_dial_5,#jog_dial_6{
   position: relative;
   width: 20px;
@@ -342,6 +346,9 @@ position: relative;
 width: 15%;
 background: #0f69cd;
 }
+
+
+
 /* The switch - the box around the slider */
 .switch {
     position: relative;
