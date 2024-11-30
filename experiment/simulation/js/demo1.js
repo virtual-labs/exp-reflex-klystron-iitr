@@ -1,5 +1,6 @@
 var rightconnection=false;
 var datapoints1 = [];
+var knobFlag=false;
 
 jsPlumb.ready(function () {
 
@@ -108,10 +109,13 @@ jsPlumb.ready(function () {
 
     jsPlumb.fire("jsPlumbDemoLoaded", instance);
 
+    var correct_connections_1_4 ;var correct_connections_2_5; var allowed_connections;var is_connected_1_4; var unallowed_connection_present;
+    var is_connected_2_5;
 
+    
 document.getElementById("check11").addEventListener("click", function () {
   
-        var correct_connections_1_4 = [
+         correct_connections_1_4 = [
             {
                 "source": "ld1",
                 "target": "ld4"
@@ -123,7 +127,7 @@ document.getElementById("check11").addEventListener("click", function () {
             }
         ];
 
-        var correct_connections_2_5 = [
+         correct_connections_2_5 = [
             {
                 "source": "ld2",
                 "target": "ld5"
@@ -137,7 +141,7 @@ document.getElementById("check11").addEventListener("click", function () {
         
 
 
-        var allowed_connections = [
+         allowed_connections = [
             {
                 "source": "ld1",
                 "target": "ld4"
@@ -161,11 +165,11 @@ document.getElementById("check11").addEventListener("click", function () {
          ];
          var actual_connections = instance.getAllConnections();
 
-        var is_connected_1_4= false;
-        var is_connected_2_5 = false;
+         is_connected_1_4= false;
+         is_connected_2_5 = false;
         
 
-        var unallowed_connection_present = false;
+         unallowed_connection_present = false;
 
         actual_connections.forEach(function (connection) {
             var this_connection = {
@@ -223,11 +227,14 @@ document.getElementById("check11").addEventListener("click", function () {
                   container: 'position-absolute',
                   popup:"swal2-popup"
                 },
-                title:'Good job',
-                text:"Correct Connection",      
+                title:'Correct Connection!!',
+                text:"Connection Established",      
                 icon:'success',
                 });
-
+                
+           knobFlag=true;
+           document.getElementById('jog_dial_one').style.cursor='pointer';
+           document.getElementById('jog_dial_two').style.cursor='pointer';
                 document.getElementById("manual").disabled= true;
             document.getElementById("check").disabled=true
             document.getElementById("name").style.visibility = "visible";
@@ -289,7 +296,7 @@ document.getElementById("check11").addEventListener("click", function () {
                       container: 'position-absolute',
                       popup:"swal2-popup"
                     },
-                    text:'Incomplete connections',     
+                    text:'Incomplete connections!!',     
                     icon:'warning',
                     });
                 return;
