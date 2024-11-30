@@ -12,7 +12,7 @@ To perform the experiment follow the steps:
 
 ![setup](images/setup1.png)
 
-**Fig. 1 Setup to study the characteristics of Reflex Klystron**
+**Fig. 1 Bench setup for characteristics of reflex klystron**
 </center>
   
 

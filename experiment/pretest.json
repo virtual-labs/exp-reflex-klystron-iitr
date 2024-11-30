@@ -1,6 +1,6 @@
-[{"question":"______ is a single cavity klystron tube that operates as on oscillator by using a reflector electrode after the cavity.","answers":{"a":"Backward wave oscillator","b":"Reflex klystron","c":"Travelling wave tube","d":"Magnetrons"},"correctAnswer":"b"},
+[{"question":"______ is a single cavity klystron tube that operates as on oscillator by using a reflector electrode after the cavity.","answers":{"a":"Backward wave oscillator","b":"Reflex klystron","c":"Traveling wave tube","d":"Magnetrons"},"correctAnswer":"b"},
 {"question":"The klystron tube used in a klystron amplifier is a ______ type beam amplifier.","answers":{"a":"Linear beam","b":"Crossed field","c":"Parallel field","d":"None of the mentioned"},"correctAnswer":"a"},
 {"question":"A major disadvantage of klystron amplifier is:","answers":{"a":"Low power gain","b":"Low bandwidth","c":"High source power","d":"Design complexity"},"correctAnswer":"b"},
-{"question":"Which of the following is one of the mode in Reflex Klystron","answers":{"a":"Give same frequency but different transit time","b":"Are caused by spurious frequency modulation","c":"Are just for theoretical considerationt","d":"Result from excessive transit time across resonator gap"},"correctAnswer":"a"},
-{"question":"Klystron oscillators are most often used in the frequency range of","answers":{"a":"300 to 3000 MHz","b":"3000 to 30000 MHz","c":"30 to 30000 MHz","d":"10 to 10000 MHz"},"correctAnswer":"b"}]
+{"question":"Reflex klystron is used in_____.","answers":{"a":"Oscillator","b":"Mixer","c":"Frequency Multiplier","d":"NOne of the above"},"correctAnswer":"a"},
+{"question":"The main frequency determining element of a klystron is","answers":{"a":"The repeller voltage","b":"The accelerating voltage","c":"Its resonant cavity","d":"Its mode of operation"},"correctAnswer":"c"}]
 

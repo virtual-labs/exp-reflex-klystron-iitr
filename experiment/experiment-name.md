@@ -1,1 +1,1 @@
-## To study the Characteristics of Reflex Klystron.
+## Characteristics of Reflex Klystron.

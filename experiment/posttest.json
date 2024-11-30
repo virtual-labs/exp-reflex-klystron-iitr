@@ -1,7 +1,7 @@
 [{"question":"A reflex klystron is oscillating at the frequency of its resonant cavity. If the reflector voltage is made slightly less negative, the","answers":{"a":"Oscillation will cease","b":"Output power would increase","c":"The frequency will decrease","d":"Bunching would occur earlier in time"},"correctAnswer":"c"},
 {"question":"The coarse frequency adjustment of a reflex klystron is accomplished by","answers":{"a":"The AFC system","b":"Adjusting the flexible wall of the resonant cavity","c":"An adjustment in the synchronizer","d":"Varying the repeller voltage"},"correctAnswer":"b"},
-{"question":"The main frequency determining element of a klystron is","answers":{"a":"The repeller voltage","b":"The accelerating voltage","c":"Its resonant cavity","d":"Its mode of operation"},"correctAnswer":"c"},
+{"question":"Klystron oscillators are most often used in the frequency range of","answers":{"a":"300 to 3000 MHz","b":"3000 to 30000 MHz","c":"30 to 30000 MHz","d":"10 to 10000 MHz"},"correctAnswer":"b"},
 {"question":"The reflex klystron is often preferred to the two-cavity klystron oscillator because the former","answers":{"a":"is more efficient","b":"has higher number of modes","c":"is easier to tune","d":"produces a higher output power"},"correctAnswer":"c"},
-{"question":"Reflex klystron is used in_____.","answers":{"a":"Oscillator","b":"Mixer","c":"Frequency multiplier","d":"None of these"},"correctAnswer":"a"}]
+{"question":"Which of the following is one of the mode in Reflex Klystron?","answers":{"a":"Give same frequency but different transit time","b":"Are caused by spurious frequency modulation","c":"Are just for theoretical consideration","d":"Result from excessive transit time across resonator gap"},"correctAnswer":"a"}]
 
 
