@@ -6,6 +6,8 @@
 * Demo : http://www.ohsean.net/plugins/jogdial/
 */
 
+
+
 (function (window, undefined) {
     'use strict';
   
@@ -202,7 +204,7 @@
         return false;
       }
       
-      // Set global contant values and functions
+      // Set global constant values and functions
       setConstants();
   
       // Set this instance
@@ -299,7 +301,7 @@
   
       //Set wheel properties
       W.setAttribute('id', BId + '_wheel');
-  
+ 
       WMargnLT = (BW-W.clientWidth)/2;
       WMargnTP = (BH-W.clientHeight)/2;
   
@@ -334,127 +336,146 @@
       * {HTMLElement}  JogDial.Instance.knob
       * {HTMLElement}  JogDial.Instance.wheel
       */    
+
+ //Detect event support type and override values
+ if (JogDial.PointerEvent) { // Windows 8 touchscreen
+  JogDial.utils.extend(JogDial.DomEvent,{
+    MOUSE_DOWN: 'pointerdown MSPointerDown',
+    MOUSE_MOVE: 'pointermove MSPointerMove',
+    MOUSE_OUT: 'pointerout MSPointerOut',
+    MOUSE_UP: 'pointerup pointercancel MSPointerUp MSPointerCancel'
+  });
+}
+else if (JogDial.MobileEvent) { // Mobile standard
+  JogDial.utils.extend(JogDial.DomEvent,{
+    MOUSE_DOWN: 'touchstart',
+    MOUSE_MOVE: 'touchmove',
+    MOUSE_OUT: 'touchleave',
+    MOUSE_UP: 'touchend'
+  });
+}
+
+var opt = self.opt,
+info = self.info,
+K = self.knob,
+W = self.wheel;
+self.pressed = false;
+
+// Add events
+
+
+  JogDial.utils.addEvent(W, JogDial.DomEvent.MOUSE_DOWN, mouseDownEvent, false);
+  JogDial.utils.addEvent(W, JogDial.DomEvent.MOUSE_MOVE, mouseDragEvent, false);
+  JogDial.utils.addEvent(W, JogDial.DomEvent.MOUSE_UP, mouseUpEvent, false);
+  JogDial.utils.addEvent(W, JogDial.DomEvent.MOUSE_OUT, mouseUpEvent, false);
+
+
+
+// mouseDownEvent (MOUSE_DOWN)
+function mouseDownEvent(e) {
+  if(knobFlag)
+  {
+    switch (opt.touchMode) {
+      case 'knob':
+      default:
+        self.pressed = JogDial.utils.checkBoxCollision({
+          x1: K.offsetLeft - W.offsetLeft,
+          y1: K.offsetTop - W.offsetTop,
+          x2: K.offsetLeft - W.offsetLeft + K.clientWidth,
+          y2:  K.offsetTop - W.offsetTop + K.clientHeight
+          }, JogDial.utils.getCoordinates(e));
+        break;
+      case 'wheel':
+        self.pressed = true;
+        mouseDragEvent(e);
+        break;
+    }
   
-      //Detect event support type and override values
-      if (JogDial.PointerEvent) { // Windows 8 touchscreen
-        JogDial.utils.extend(JogDial.DomEvent,{
-          MOUSE_DOWN: 'pointerdown MSPointerDown',
-          MOUSE_MOVE: 'pointermove MSPointerMove',
-          MOUSE_OUT: 'pointerout MSPointerOut',
-          MOUSE_UP: 'pointerup pointercancel MSPointerUp MSPointerCancel'
-        });
+    //Trigger down event
+    if(self.pressed) JogDial.utils.triggerEvent(self.knob, JogDial.CustomEvent.MOUSE_DOWN);
+  }
+ 
+};
+
+// mouseDragEvent (MOUSE_MOVE)
+function mouseDragEvent(e) {
+  if(knobFlag)
+  {
+    if (self.pressed) {
+      // Prevent default event
+      (e.preventDefault) ? e.preventDefault() : e.returnValue = false; 
+      
+      // var info = self.info, opt = self.opt,
+      var offset = JogDial.utils.getCoordinates(e),
+      _x = offset.x -self.center.x + W.offsetLeft,
+      _y = offset.y -self.center.y + W.offsetTop,
+      radian = Math.atan2(_y, _x) * JogDial.ToDeg,
+      quadrant = JogDial.utils.getQuadrant(_x, _y),
+      degree = JogDial.utils.convertUnitToClock(radian),
+      rotation;
+      
+      //Calculate the current rotation value based on pointer offset
+      info.now.rotation = JogDial.utils.getRotation(self, (quadrant == undefined) ? info.old.quadrant : quadrant  , degree);
+      rotation = info.now.rotation;//Math.ceil(info.now.rotation);
+      
+      if(opt.maxDegree != null && opt.maxDegree <= rotation){
+        if(info.snapshot.direction == null){
+          info.snapshot.direction = 'right';
+          info.snapshot.now = JogDial.utils.extend({},info.now);
+          info.snapshot.old = JogDial.utils.extend({},info.old);
+        }
+          rotation = opt.maxDegree;
+          radian = JogDial.utils.convertClockToUnit(rotation);
+          degree = JogDial.utils.convertUnitToClock(radian);
       }
-      else if (JogDial.MobileEvent) { // Mobile standard
-        JogDial.utils.extend(JogDial.DomEvent,{
-          MOUSE_DOWN: 'touchstart',
-          MOUSE_MOVE: 'touchmove',
-          MOUSE_OUT: 'touchleave',
-          MOUSE_UP: 'touchend'
-        });
+      else if(opt.minDegree != null && opt.minDegree >= rotation){
+        if(info.snapshot.direction == null){
+          info.snapshot.direction = 'left';
+          info.snapshot.now = JogDial.utils.extend({},info.now);
+          info.snapshot.old = JogDial.utils.extend({},info.old);
+        }
+          rotation = opt.minDegree;
+          radian = JogDial.utils.convertClockToUnit(rotation);
+          degree = JogDial.utils.convertUnitToClock(radian);
+      }
+      else if(info.snapshot.direction != null){
+        info.snapshot.direction = null;
       }
   
-      var opt = self.opt,
-      info = self.info,
-      K = self.knob,
-      W = self.wheel;
-      self.pressed = false;
+      // Update JogDial data information
+      JogDial.utils.extend(self.knob, {
+        rotation: rotation,
+        degree: degree
+      });
+      
+      // update angle
+      angleTo(self, radian);        
+    }
+  }
+
+};
+
+// mouseDragEvent (MOUSE_UP, MOUSE_OUT)
+function mouseUpEvent() {
+  if(knobFlag)
+  {
+    if(self.pressed){
+      self.pressed = false;        
+      if(self.info.snapshot.direction != null){
+        self.info.now = JogDial.utils.extend({},info.snapshot.now);
+        self.info.old = JogDial.utils.extend({},info.snapshot.old);
+        self.info.snapshot.direction = null;
+      }
   
-      // Add events
-      JogDial.utils.addEvent(W, JogDial.DomEvent.MOUSE_DOWN, mouseDownEvent, false);
-      JogDial.utils.addEvent(W, JogDial.DomEvent.MOUSE_MOVE, mouseDragEvent, false);
-      JogDial.utils.addEvent(W, JogDial.DomEvent.MOUSE_UP, mouseUpEvent, false);
-      JogDial.utils.addEvent(W, JogDial.DomEvent.MOUSE_OUT, mouseUpEvent, false);
-  
-      // mouseDownEvent (MOUSE_DOWN)
-      function mouseDownEvent(e) {
-        switch (opt.touchMode) {
-          case 'knob':
-          default:
-            self.pressed = JogDial.utils.checkBoxCollision({
-              x1: K.offsetLeft - W.offsetLeft,
-              y1: K.offsetTop - W.offsetTop,
-              x2: K.offsetLeft - W.offsetLeft + K.clientWidth,
-              y2:  K.offsetTop - W.offsetTop + K.clientHeight
-              }, JogDial.utils.getCoordinates(e));
-            break;
-          case 'wheel':
-            self.pressed = true;
-            mouseDragEvent(e);
-            break;
-        }
-  
-        //Trigger down event
-        if(self.pressed) JogDial.utils.triggerEvent(self.knob, JogDial.CustomEvent.MOUSE_DOWN);
-      };
-  
-      // mouseDragEvent (MOUSE_MOVE)
-      function mouseDragEvent(e) {
-        if (self.pressed) {
-          // Prevent default event
-          (e.preventDefault) ? e.preventDefault() : e.returnValue = false; 
-          
-          // var info = self.info, opt = self.opt,
-          var offset = JogDial.utils.getCoordinates(e),
-          _x = offset.x -self.center.x + W.offsetLeft,
-          _y = offset.y -self.center.y + W.offsetTop,
-          radian = Math.atan2(_y, _x) * JogDial.ToDeg,
-          quadrant = JogDial.utils.getQuadrant(_x, _y),
-          degree = JogDial.utils.convertUnitToClock(radian),
-          rotation;
-          
-          //Calculate the current rotation value based on pointer offset
-          info.now.rotation = JogDial.utils.getRotation(self, (quadrant == undefined) ? info.old.quadrant : quadrant  , degree);
-          rotation = info.now.rotation;//Math.ceil(info.now.rotation);
-          
-          if(opt.maxDegree != null && opt.maxDegree <= rotation){
-            if(info.snapshot.direction == null){
-              info.snapshot.direction = 'right';
-              info.snapshot.now = JogDial.utils.extend({},info.now);
-              info.snapshot.old = JogDial.utils.extend({},info.old);
-            }
-              rotation = opt.maxDegree;
-              radian = JogDial.utils.convertClockToUnit(rotation);
-              degree = JogDial.utils.convertUnitToClock(radian);
-          }
-          else if(opt.minDegree != null && opt.minDegree >= rotation){
-            if(info.snapshot.direction == null){
-              info.snapshot.direction = 'left';
-              info.snapshot.now = JogDial.utils.extend({},info.now);
-              info.snapshot.old = JogDial.utils.extend({},info.old);
-            }
-              rotation = opt.minDegree;
-              radian = JogDial.utils.convertClockToUnit(rotation);
-              degree = JogDial.utils.convertUnitToClock(radian);
-          }
-          else if(info.snapshot.direction != null){
-            info.snapshot.direction = null;
-          }
-  
-          // Update JogDial data information
-          JogDial.utils.extend(self.knob, {
-            rotation: rotation,
-            degree: degree
-          });
-          
-          // update angle
-          angleTo(self, radian);        
-        }
-      };
-  
-      // mouseDragEvent (MOUSE_UP, MOUSE_OUT)
-      function mouseUpEvent() {
-        if(self.pressed){
-          self.pressed = false;        
-          if(self.info.snapshot.direction != null){
-            self.info.now = JogDial.utils.extend({},info.snapshot.now);
-            self.info.old = JogDial.utils.extend({},info.snapshot.old);
-            self.info.snapshot.direction = null;
-          }
-  
-          // Trigger up event
-          JogDial.utils.triggerEvent(self.knob, JogDial.CustomEvent.MOUSE_UP);
-        }
-      };
+      // Trigger up event
+      JogDial.utils.triggerEvent(self.knob, JogDial.CustomEvent.MOUSE_UP);
+    }
+  }
+ 
+};
+
+ 
+     
     };
   
     /*
@@ -521,7 +542,7 @@
  var bar = document.getElementById('hh');
  
       var dialOne = JogDial(document.getElementById('jog_dial_one'), 
-                          {debug:false, wheelSize:'90%', knobSize:'10px', minDegree:200, maxDegree:450, degreeStartAt: 200})
+                          {debug:false, wheelSize:'90%', zIndex : 1000,knobSize:'8px', minDegree:200, maxDegree:450, degreeStartAt: 200})
           .on('mousemove', function(evt){
             a=Math.round((evt.target.rotation))
             console.log(cc.checked);
@@ -536,7 +557,7 @@
                });	
    var bar1 = document.getElementById('jog_dial_two_meter_inner1');   
           var dialtwo = JogDial(document.getElementById('jog_dial_two'), 
-                              {debug:false, wheelSize:'90%', knobSize:'8px', minDegree:100 , maxDegree:230, degreeStartAt: 120})
+                              {debug:false, wheelSize:'90%', zIndex : 1000, knobSize:'8px', minDegree:100 , maxDegree:230, degreeStartAt: 120})
               .on('mousemove', function(evt){ 
 
                 b= Math.round((evt.target.rotation))
@@ -583,18 +604,13 @@
                        n = 0;
                    }
                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-       
-                   
                    ctx.beginPath();
+
                    for (var x = 0; x < n; x++) {
                        var y = J*0.3*(squareY((x*(K-8.9))+L));
                        ctx.lineTo(x, y + 28);
-                   }
-                   ctx.stroke();
-               
-                
-                       
-                 
+                  }
+                  ctx.stroke();     
            }
            
                                         // squared sine
@@ -607,33 +623,29 @@
                 if( cc.checked==true){
                 
                 var viewModel = {
-                   testValue2: ko.observable(Math.round((evt.target.rotation))),
-                   
-                   
+                   testValue2: ko.observable(Math.round((evt.target.rotation))),  
               };
-             
-       
-              
+
               ko.applyBindings(viewModel); 
             }     
 
               });
               var bar2 = document.getElementById('jog_dial_3_meter_inner1');  
           var dial3 = JogDial(document.getElementById('jog_dial_3'), 
-                              {debug:false, wheelSize:'90%', knobSize:'6px', minDegree:100, maxDegree:100, degreeStartAt: 100})
+                              {debug:false, wheelSize:'90%', zIndex : 1000,knobSize:'6px', minDegree:100, maxDegree:100, degreeStartAt: 100})
              
               var bar3 = document.getElementById('jog_dial_4_meter_inner1');  
           var dial4 = JogDial(document.getElementById('jog_dial_4'), 
-                              {debug:false, wheelSize:'90%', knobSize:'6px', minDegree:100, maxDegree:100, degreeStartAt: 100})
+                              {debug:false, wheelSize:'90%', zIndex : 1000,knobSize:'6px', minDegree:100, maxDegree:100, degreeStartAt: 100})
               
 
               var bar4 = document.getElementById('jog_dial_5_meter_inner1');  
               var dial5 = JogDial(document.getElementById('jog_dial_5'), 
-                                  {debug:false, wheelSize:'90%', knobSize:'6px', minDegree:340, maxDegree:340, degreeStartAt: 340})
+                                  {debug:false, wheelSize:'90%', zIndex : 1000,knobSize:'6px', minDegree:340, maxDegree:340, degreeStartAt: 340})
                   
                   var bar5 = document.getElementById('jog_dial_6_meter_inner1');  
           var dial6 = JogDial(document.getElementById('jog_dial_6'), 
-                              {debug:false, wheelSize:'90%', knobSize:'6px', minDegree:120, maxDegree:120, degreeStartAt: 120})
+                              {debug:false, wheelSize:'90%', zIndex : 1000,knobSize:'6px', minDegree:120, maxDegree:120, degreeStartAt: 120})
              			
  
    
@@ -670,7 +682,7 @@ function validate() {
        container: 'position-absolute',
        popup:"swal2-popup"
      },
-     text:'Toggle the switch buttton and move the knob of reflector voltage for some values.',     
+     text:'Toggle the switch button and move the knob of reflector voltage for some values.',     
      icon:'warning',
      });
   }
@@ -699,8 +711,8 @@ function validate() {
         container: 'position-absolute',
         popup:"swal2-popup"
       },
-      title:'Missing',
-      text:'First enter some value for Current.',     
+      title:'Missing Current Value!!',
+      text:'First enter some value for Current and then click on the button.',     
       icon:'warning',
       });
   }
@@ -793,8 +805,8 @@ if(n==false || m==false || c==false){
         container: 'position-absolute',
         popup:"swal2-popup"
       },
-      title:'Oops..',
-      text:'Please enter correct value.',     
+      title:'Wrong Input!!',
+      text:'Please enter the correct value.',     
       icon:'error',
       });
  

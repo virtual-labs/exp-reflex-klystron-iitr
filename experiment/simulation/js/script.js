@@ -94,7 +94,7 @@ else{
   var layout = {
     title: 'Graph of Reflector Voltage vs Output Power',
     xaxis: {
-     title: 'Reflector Voltage',
+     title: 'Reflector Voltage (V)',
       titlefont: {
         family: 'Arial, sans-serif',
         size: 18,
@@ -104,7 +104,7 @@ else{
       autorange: false
     },
     yaxis: {
-      title: 'Output Power',
+      title: 'Output Power (W)',
       titlefont: {
         family: 'Arial, sans-serif',
         size: 18,
