@@ -122,11 +122,9 @@ else{
         size: 16
       }
     }
-  }
-  config={
-    "displaylogo": false,  
-},
-  Plotly.newPlot('myDiv', data, layout,config);
+  };
+  
+  Plotly.newPlot('myDiv', data, layout,{ displaylogo: false });
         size = xValue.length;
        
   document.getElementById("print").disabled=false;
