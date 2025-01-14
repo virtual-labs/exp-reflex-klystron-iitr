@@ -1,0 +1,819 @@
+<!DOCTYPE >
+<html>
+
+<head>
+ <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-ui.min.js"></script>
+  <script src="js/knockout-2.2.1.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script src="js/sevenSeg.js"></script>
+  
+  <script src="js/demo.js"></script>
+  <script src="js/jquery.knob.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="js/script.js"></script>
+  <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+
+   <!-- Resources -->
+   <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+   <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+   <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'></link>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+   <!-- Chart code -->
+ 
+  <script>
+  
+    var gtemp="";
+    function reset() {
+      window.location.reload()
+    }
+    function shows()
+    {
+      Swal.fire({
+                        backdrop:false,
+                       target: '#rom',
+                       position:'center',
+                       
+                        customClass: {
+                          container: 'position-absolute',
+                          popup:"swal2-popup"
+                        },
+                        showClass: {
+                            popup: 'animate__animated animate__fadeInDown'
+                          },
+                          hideClass: {
+                            popup: 'animate__animated animate__fadeOut'
+                          },
+                        html: '<div style="font-size:16px;">Setup for Characteristics of Reflex Klystron</div>',
+                        imageUrl: "images/setup1.png",
+                        imageWidth: 450,
+                        imageHeight: 200,
+                        imageAlt: "Setup",
+                        });
+    }
+
+    function allowDrop(ev) {
+      ev.preventDefault();
+    }
+
+    function drag(ev) {
+
+      ev.dataTransfer.setData("text", ev.target.id);
+      gtemp=ev.target.id+"s"
+      
+      
+
+    }
+    function appear() {
+      document.getElementById("stand").style.visibility = "visible";
+      document.getElementById("images").style.visibility = "visible";
+      document.getElementById("images").style.opacity = "1";
+      document.getElementById("powersupply").style.visibility = "visible";
+      document.getElementById("gg").style.visibility = "visible";
+      document.getElementById("gg").style.opacity = "1";
+      document.getElementById("space").style.visibility = "visible";
+      
+      document.getElementById("grpwrap").style.visibility= "visible"
+      document.getElementById("exph").style.marginLeft = "243px";
+      document.getElementById("exph").style.width = "1004px";
+      
+      
+    }
+    function appear11() {
+      
+     if(b==0)
+     {
+      Swal.fire({
+        backdrop:false,
+       target: '#rom',
+       position:'center',
+       width:'460px',
+        customClass: {
+          container: 'position-absolute',
+          popup:"swal2-popup"
+        },
+        icon:'warning',
+        html:'<div style="color:blue;text-align:left;font-weight:bold;">Move the knob of reflector voltage for:</div><table><tr><td>Starting point &rarr; 197</td></tr><tr><td>Peak point &rarr; 205</td></tr><tr><td>Ending point &rarr; 215</td></tr></table>',
+      
+        });
+        return;
+     }
+      if(b==197){
+        document.getElementById("croi").style.visibility = "hidden";
+      document.getElementById("croi").style.display = "none";
+      document.getElementById("grpwrap").style.visibility= "hidden"
+      document.getElementById("volt").style.visibility="hidden"
+      document.getElementById("croiii").style.visibility = "visible";
+      document.getElementById("micro").style.visibility = "visible";
+      document.getElementById("micro").style.display = "block";
+      document.getElementById("croiii").style.display = "block";
+      document.getElementById("reading1").style.visibility = "visible"; 
+
+      document.getElementById("reading2").style.visibility = "hidden"; 
+      document.getElementById("reading3").style.visibility = "hidden";
+      document.getElementById("reading2").style.display = "none"; 
+      document.getElementById("reading3").style.display = "none";
+
+      document.getElementById("reading1").style.display = "block";
+      }
+     if(b==205){
+        document.getElementById("croi").style.visibility = "hidden";
+      document.getElementById("croi").style.display = "none";
+      document.getElementById("grpwrap").style.visibility= "hidden"
+      document.getElementById("volt").style.visibility="hidden"
+      document.getElementById("croiii").style.visibility = "visible";
+      document.getElementById("micro").style.visibility = "visible";
+      document.getElementById("micro").style.display = "block";
+      document.getElementById("croiii").style.display = "block";
+        document.getElementById("reading2").style.visibility = "visible";
+
+        document.getElementById("reading1").style.visibility = "hidden"; 
+      document.getElementById("reading3").style.visibility = "hidden";
+      document.getElementById("reading1").style.display = "none"; 
+      document.getElementById("reading3").style.display = "none";
+
+document.getElementById("reading2").style.display = "block";
+      }
+     if(b==215){
+        document.getElementById("croi").style.visibility = "hidden";
+      document.getElementById("croi").style.display = "none";
+      document.getElementById("grpwrap").style.visibility= "hidden"
+      document.getElementById("volt").style.visibility="hidden"
+      document.getElementById("croiii").style.visibility = "visible";
+      document.getElementById("micro").style.visibility = "visible";
+      document.getElementById("micro").style.display = "block";
+      document.getElementById("croiii").style.display = "block";
+        document.getElementById("reading3").style.visibility = "visible";
+
+      document.getElementById("reading2").style.visibility = "hidden"; 
+      document.getElementById("reading1").style.visibility = "hidden";
+      document.getElementById("reading2").style.display = "none"; 
+      document.getElementById("reading1").style.display = "none";
+
+document.getElementById("reading3").style.display = "block";
+      }
+      if(b!=215 && b!=205 && b!=197){
+        Swal.fire({
+        backdrop:false,
+       target: '#rom',
+       position:'center',
+        customClass: {
+          container: 'position-absolute',
+          popup:"swal2-popup"
+        },
+        icon:'error',
+        title:'Incorrect reflector voltage value',
+        text:"Try to take down values for starting point, peak point and ending point of signal.",
+        });
+     
+      }
+      
+      
+    }
+    function hov() {
+        document.getElementById("container").style.visibility = "visible";     
+      }
+
+      function hide(){  
+        document.getElementById("container").style.visibility = "hidden"; 
+      }
+   
+       function drop(ev, target) {
+      ev.preventDefault();
+      var da = target;
+      
+      if ($(da).children()[0] != undefined) {
+        console.log($(da).children()[0])
+        console.log(ev)
+        document.getElementById('gg').appendChild($(da).children()[0].getData("text/html"))
+      }
+      $(da).empty();
+  
+      var data = ev.dataTransfer.getData("text");
+
+      if (ev.target.id != document.getElementById(data).getAttribute('data-div'))
+  { 
+    Swal.fire({
+                        backdrop:false,
+                       target: '#rom',
+                       position:'center',
+                       width:'480px',
+                        customClass: {
+                          container: 'position-absolute',
+                          popup:"swal2-popup"
+                        },
+                        html:'Incorrect component placement. Click the <b>Experiment setup</b> button to view the setup.',
+                        title:'Please try again!!',     
+                        icon:'error',
+                        });
+
+return;
+  }
+      target.appendChild(document.getElementById(data));
+      document.getElementById(gtemp).style.display="block";
+      if($("#drag1").parents("#div1").length == 1 && $("#drag4").parents("#div4").length == 1 && $("#drag9").parents("#div9").length == 1)
+      {
+        document.getElementById("con").style.visibility = "visible";
+        document.getElementById("check11").disabled=false;
+       
+      }
+      var op=data+"s";
+      document.getElementById(op).style.opacity=0.5;
+      document.getElementById(op).draggable=false;
+    }
+   
+
+  </script>
+
+<script>
+  $(function($) {
+
+      $(".knob").knob({
+          change : function (value) {
+              //console.log("change : " + value);
+          },
+          release : function (value) {
+              //console.log(this.$.attr('value'));
+              console.log("release : " + value);
+          },
+          cancel : function () {
+              console.log("cancel : ", this);
+          },
+          /*format : function (value) {
+              return value + '%';
+          },*/
+          draw : function () {
+
+              // "tron" case
+              if(this.$.data('skin') == 'tron') {
+
+                  this.cursorExt = 0.3;
+
+                  var a = this.arc(this.cv)  // Arc
+                      , pa                   // Previous arc
+                      , r = 1;
+
+                  this.g.lineWidth = this.lineWidth;
+
+                  if (this.o.displayPrevious) {
+                      pa = this.arc(this.v);
+                      this.g.beginPath();
+                      this.g.strokeStyle = this.pColor;
+                      this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, pa.s, pa.e, pa.d);
+                      this.g.stroke();
+                  }
+
+                  this.g.beginPath();
+                  this.g.strokeStyle = r ? this.o.fgColor : this.fgColor ;
+                  this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, a.s, a.e, a.d);
+                  this.g.stroke();
+
+                  this.g.lineWidth = 2;
+                  this.g.beginPath();
+                  this.g.strokeStyle = this.o.fgColor;
+                  this.g.arc( this.xy, this.xy, this.radius - this.lineWidth + 1 + this.lineWidth * 2 / 3, 0, 2 * Math.PI, false);
+                  this.g.stroke();
+
+                  return false;
+              }
+          }
+      });
+
+      // Example of infinite knob, iPod click wheel
+      var v, up=0,down=0,i=0
+          ,$idir = $("div.idir")
+          ,$ival = $("div.ival")
+          ,incr = function() { i++; $idir.show().html("+").fadeOut(); $ival.html(i); }
+          ,decr = function() { i--; $idir.show().html("-").fadeOut(); $ival.html(i); };
+      $("input.infinite").knob(
+                          {
+                          min : 0
+                          , max : 20
+                          , stopper : false
+                          , change : function () {
+                                          if(v > this.cv){
+                                              if(up){
+                                                  decr();
+                                                  up=0;
+                                              }else{up=1;down=0;}
+                                          } else {
+                                              if(v < this.cv){
+                                                  if(down){
+                                                      incr();
+                                                      down=0;
+                                                  }else{down=1;up=0;}
+                                              }
+                                          }
+                                          v = this.cv;
+                                      }
+                          });
+  });
+</script>
+<link rel="stylesheet" href="css/task7.css">
+<style>
+
+</style>
+</head>
+
+
+<body>
+<div id="box">
+<div class="mainn">
+  <table>
+   
+      
+    </tr>
+<tr>
+
+  <td>
+   
+   <div id="exph">
+    <h2 id="expm"> Characteristics of Reflex Klystron  &emsp; &emsp; &emsp; &emsp; &emsp;  &emsp; &emsp; &emsp; &emsp;&emsp; &emsp;&emsp; &emsp;&emsp; <button style="font-family: 'Times New Roman', Times, serif;" ondblclick="hide()"  onclick="hov()" id="help">INSTRUCTIONS</button> </h2>
+   
+    </div>
+    
+    
+    <div id="container">
+      <div id="carouselContent" class="carousel" data-interval="false">
+          <div class="carousel-inner" role="listbox">
+              <div class="carousel-item active ">
+                  Click on Components button for components to pop up.
+              </div>
+              <div class="carousel-item ">
+                  
+                  Click on the component, drag them to the test bench and place them as shown in the experiment setup.
+              </div>
+              <div class="carousel-item ">
+                  
+                After placing the components on the test bench, connect the wires accordingly. 
+            </div>
+
+            <div class="carousel-item ">
+                  
+             To check your connections  click on "Check Connections" button.
+          </div>
+                   
+          <div class="carousel-item ">
+                  
+           If your connections are correct then you may continue to take down the readings, if not then click on "Reset Button" and try it again.
+         </div>
+         <div class="carousel-item ">
+                  
+          Move the "Beam Voltage" knob and set it to 250 or above to record your readings.
+         </div>
+         <div class="carousel-item ">
+                   
+           Toggle the switch button and move the "Reflector Voltage" knob to set the reflector voltage to maximum negative value.
+          </div>
+          <div class="carousel-item ">
+                   
+          As soon as you start varying the reflector voltage you will observe a waveform on CRO.
+          </div>
+          <div class="carousel-item ">
+                   
+          You will get square waveforms at these values 197 (starting point), 205 (peak point) and 215 (ending point) of voltage.
+          </div>
+          <div class="carousel-item ">
+                   
+           As soon as you observe square waveform on CRO, click on "Micro-ammeter" button for current values.
+          </div>
+          
+          <div class="carousel-item ">
+                   
+           Note down the value for current in input box of Current for three points.
+          </div>
+          <div class="carousel-item ">
+            For the value of voltage at starting point of signal, peak point, ending point of a signal.    
+         
+          </div>
+          <div class="carousel-item ">
+                   
+            Click on "Add to table" button to add values of Reflector Voltage and Power in a table.
+           </div>
+         <div class="carousel-item ">
+                  
+          Now Move the "Reflector Voltage" knob for different reading. 
+         </div>
+         <div class="carousel-item ">
+                  
+          Repeat the process for almost 3 different readings (i.e for starting, peak and ending) as you did for the first reading.
+         </div>
+         <div class="carousel-item ">
+                  
+          Click on "Plot" button to plot a graph as per your readings.
+         </div>
+         <div class="carousel-item ">
+                  
+          If you want to save the graph click on the camera icon just above the graph.
+         </div>
+         <div class="carousel-item ">
+                  
+          Click on "Close" button to go back to the page of readings.
+         </div>
+
+         <div class="carousel-item ">
+          Now click on "Print" button to get a PDF of all the readings and connections for this experiment.       
+         
+        </div>
+         
+          </div>
+          <a class="carousel-control-prev" href="#carouselContent" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+           
+        </a>
+          <a class="carousel-control-next" href="#carouselContent" role="button" data-slide="next">
+            
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              
+          </a>
+        
+      </div>
+  </div>
+    
+    
+    <!--Components Left Side-->
+    <div  id="gg"  ondragover="allowDrop(event)">
+      <table id="images1">
+        <tr>
+          <td id="headingg1" >
+            <h2 style="margin-bottom: 1px;">
+              READINGS
+            </h2>
+            
+          </td>
+         
+            
+          <tr> <td style="padding-left: 4px; ">
+            <hr style="width: 170px;">
+          </td></tr>
+          <tr>
+            <td style="padding-left: 20px;padding-top: 8px; padding-bottom: 2px; ">
+              Note down the value for current to calculate the value of power.
+            </td>
+          </tr>
+          <tr>
+            <td style="padding-left: 20px;padding-top: 10px; padding-bottom: 2px; ">
+              <table id="readin1">
+                
+                <tr>
+                  <td>
+                    Current:
+          
+                  </td>
+                 <td >
+                   <input  id="V1">
+                 </td>
+          <td>
+            μA
+          </td>
+                </tr>
+              
+              </table>
+            </td>
+          </tr>  
+          <tr>
+            <td style="padding-left: 20px;padding-top: 20px; padding-bottom: 30px; ">
+              <b>Power = Reflector voltage x Current</b>
+            </td>
+          </tr>
+        </tr>
+         <tr>
+           <td style="padding-left: 20px">
+            Click on Add to table to add on the value for Reflector Voltage and  Power.
+           </td>
+         </tr>
+        
+         <tr>
+           <td style="padding-top: 30px; padding-bottom: 20px;" >
+        <div class="tablediv" >
+         <table id="readin">
+        <tr>
+          <th style="padding-right: 20px; ">Reflector Voltage</th>
+          <th >Power (in watts) </th>
+        </tr>
+        
+      </table>
+    </div>
+      </td>
+
+    </tr>
+    
+  
+<tr> 
+  <td>
+    <table>
+      <tr>
+        <td>
+          <td id="button" >
+            <button id="addto" onclick="validate()">Add To Table</button>
+          </td>
+        </td>
+        <td>
+            <button id="plot" disabled onclick="makePlot()">Plot</button>
+          </td>
+      </tr>
+    </table>
+   </td>
+</tr>
+        </table>
+
+
+      <table id="images">
+      <tr>
+        <td id="headingg" >
+          <h2>
+            COMPONENTS
+          </h2>
+          <hr>
+        </td>
+      </tr>
+          
+        <tr>
+          <td>
+            <table id="ctab">
+        <tr>
+          
+          <td >
+            <img id="drag2" src="images/isolator.png" draggable="true" ondragstart="drag(event)" width="80" height="60" data-div="div2">
+            <img  id="drag2s" src="images/isolator.png" width="80" style="display: none;">
+          </td>
+        </tr>
+        <tr>
+          <td class="imgr">
+            Isolator
+          </td>
+        </tr>
+          <tr>
+          <td style="padding-left: 30px;">
+            <img id="drag3"  src="images/attenuator.png" draggable="true" ondragstart="drag(event)" width="70" height="70" data-div="div3">
+            <img id="drag3s" src="images/attenuator.png" width="60" style="display: none;">
+          </td>
+        </tr>
+        <tr>
+          <td class="imgr">
+            Attenuator
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 20px;" >
+            <img id="drag4" src="images/detector.png" draggable="true" ondragstart="drag(event)" width="70" height="35" data-div="div4">
+            <img id="drag4s" src="images/detector.png" width="80" style="display: none;">
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="imgr">
+            Detector
+          </td>
+        </tr>
+       
+        <tr>
+          <td style="padding-bottom: 3px;padding-top: 5px;">
+            <img id="drag1" src="images/klystron mount.png" draggable="true" ondragstart="drag(event)" width="100" height="60" data-div="div1">
+            <img id="drag1s" src="images/klystron mount.png" width="100" style="display: none;" >
+          </td>
+        </tr>
+        <tr>
+          <td class="imgr">
+           Klystron Mount
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 40px;" >
+            <img id="drag8" src="images/frequency.png" draggable="true" ondragstart="drag(event)" width="40" height="60" data-div="div8">
+            <img id="drag8s" src="images/frequency.png" width="30" style="display: none;" >
+          </td>
+        </tr>
+        <tr>
+          <td class="imgr">
+           Frequency Meter
+          </td>
+        </tr>
+        <td style="padding-left: 10px;" >
+          <img id="drag9" src="images/slotted-line.png" draggable="true" ondragstart="drag(event)" width="90" height="55" data-div="div9">
+          <img id="drag9s" src="images/slotted-line.png" width="90" style="display: none;" >
+        </td>
+      </tr>
+      <tr>
+        <td class="imgr">
+      Slotted Line
+        </td>
+      </tr>
+
+      </table>
+        </td>
+      </tr>
+      </table>
+    </div>
+   
+   
+     <!--Right side-->
+      <div id="exp">
+
+      
+  <table id="lab">
+
+  <tr> <td>
+    
+
+    <div id="div1" ondrop="drop(event,this)" ondragover="allowDrop(event)"></div>
+    <div id="div9" ondrop="drop(event,this)" ondragover="allowDrop(event)"></div>
+    <div id="div2" ondrop="drop(event,this)" ondragover="allowDrop(event)"></div>
+    <div id="div3" ondrop="drop(event,this)" ondragover="allowDrop(event)"></div>
+    <div id="div8" ondrop="drop(event,this)" ondragover="allowDrop(event)"></div>
+    <div id="div4" ondrop="drop(event,this)" ondragover="allowDrop(event)"></div>
+    
+    
+    <div id="con" class="jtk-demo-main">
+     <div class="jtk-demo-canvas canvas-wide animation-demo jtk-surface jtk-surface-nopan" id="canvas">
+         <div class="littledot" id="ld1"><label style="position:absolute;top:-22px;left: -1em;">A</label></div>
+         <div class="littledot" id="ld2"><label style="position:absolute;top:-22px;left: -1em;">B</label></div>
+         <div class="littledot" id="ld4">D </div>
+         <div class="littledot" id="ld5">E </div>
+     </div>
+  </div>
+  
+    <div id="stand">
+     <img id="block1" src="images/block4.jpg">
+     <img id="block2" src="images/block4.jpg">
+     <img id="block4" src="images/block4.jpg">
+     <img id="block3" src="images/block4.jpg">
+     <img id="block5" src="images/block4.jpg">
+      <img id="drag0" src="images/stand.png" width="500" >
+    </div>
+
+    <div id="table55">
+      <img id="aa" src="images/table.png " width="1000" height="100" >
+    </div>
+    
+   
+    <div id="space">
+      <img id="croi" src="images/cro.png">
+     
+        <img id="croiii" src="images/microammeter.png">
+   
+      <h4 id="volt">
+        volt/div = 0.2
+      </h4>
+          </div>
+          <div id="grpwrap" style="height: 70px; width: 90px; " >
+           
+            <canvas id="C1" style="background-image: url('images/SharedScreenshot.jpg'); height: 70px; width: 90px; " ></canvas>
+        
+        </div>
+        <div id="grpwrap11" style="height: 50px; width: 50px; " >
+           <div id="micro"> μA</div>
+         <img id="reading1" src="images/reading1.jpg">
+         <img id="reading2" src="images/reading2.jpg">
+         <img id="reading3" src="images/reading3.jpg">
+      
+      </div>
+       
+             
+        <div id="powersupply">
+          
+          <table>       
+                <tr>
+                  <h2 class="heading5">Klystron power supply</h2>
+                </tr>
+                <tr>
+                  <div class="exampleContainer exampleInput">
+                    <div id="aaaa" data-bind="sevenSeg: {digits: 6, value:testValue2 }"></div>
+                  </div>      
+              </tr>
+              
+           
+            <tr>
+              <h6 id="name">  Beam Voltage</h6>
+                <label class="switch">  
+                  <input disabled type="checkbox"  onclick="myFunction()" id="cch">
+                 
+             <span class="slider round">   </span>
+            </tr>
+            
+              <tr class="mainknob">
+                <td></td>
+                  <td id="voltage">       
+                    <h4 class="heading4">Beam Voltage</h4>                         
+                    <div id="jog_dial_one"></div>                   
+                    <div id="jog_dial_one_meter_inner1"></div>
+                     
+                  </td>
+            
+                  <td id="voltage">                   
+                    <h4   class="heading4">Reflector Voltage</h4>                                         
+                    <div  id="jog_dial_two"></div>                    
+                    <div id="jog_dial_two_meter_inner1"></div>
+                  </td>
+              </tr>
+
+                  <tr>
+
+                    <td id="voltage1">                                        
+                      <h5 class="heading4">Amplitude</h5>                   
+                      <div id="jog_dial_3"></div>            
+                      <div id="jog_dial_3_meter_inner1"></div>   
+                   </td>
+
+                 <td id="voltage1">
+                    <h5 class="heading4">Frequency</h5>              
+                    <div id="jog_dial_4"></div> 
+                    <div id="jog_dial_4_meter_inner1"></div>                
+                 </td>
+               
+                 
+                  <td id="voltage1">
+                    <h5 class="heading4">Amplitude</h5>                  
+                    <div id="jog_dial_5"></div>                    
+                    <div id="jog_dial_5_meter_inner1"></div>                  
+                  </td>
+
+                    <td id="voltage1">
+                      <h5 class="heading4">Frequency</h5>                    
+                      <div id="jog_dial_6"></div>               
+                      <div id="jog_dial_6_meter_inner1"></div>
+                    </td>
+
+                  </tr>
+           </table>                        
+        </div>
+
+      </td>
+    </tr>
+
+<div id="rom">
+  <img id="rom1"src="images/empty-room-with-white-brick-walls-studio_107791-1349.jpg" style="max-width: 1000;">
+</div>
+    
+      </table>
+
+      <div id="but">
+        <button id="check" onclick="appear()">Components</button>
+        <button id="check11" disabled >Check Connections</button>
+        <button id="ammeter" onclick="appear11()" disabled>Micro-ammeter</button>
+        <button id="manual"  onclick="shows()">Experiment setup</button>
+        <a href="images/To study the characteristics of Reflex Klystron.pdf"> <button id="print" disabled >Print</button></a>
+        <button id="reset"  onclick="reset()">Reset</button>       
+      </div>
+<br>
+      <div id="prop" style="position: relative; top:70px; left:100px; ">
+          
+       
+        <table  border="2px" style=" visibility: none;">
+          
+          <tr>  <input  value="0" id="P1" onclick="cal()" >&nbsp;<output></output></td></tr>
+          
+          
+          <tr><input  value="9.4" id="P2" onclick="cal()" >
+            &nbsp; <output></output>&nbsp;GHz</td></tr>
+          
+          
+          <tr><td> <input value="90" id="P3" onclick="cal()">
+            &nbsp; <output></output><sup>o</sup></td></tr>
+          
+          
+          </table>
+          
+            <div>
+               
+       
+      </div>
+         
+  </tr>
+</table>
+</div>
+
+<div id="graph">
+  <div id="graph1">
+  <div id="myDiv" width="30%"  >
+    
+  </div>
+  <button id="close" onclick="close1()">
+    Close
+  </button>
+  <button  id="watermark1"><b>© 2023, Virtual Labs IIT Roorkee</b></button>
+</div>
+</div>
+
+</div>
+
+</div>
+<footer class="main-footer">
+  <div align="center" style="font-size: 20px;font-weight: bold;">© 2023 Virtual Labs, IIT Roorkee<!-- Institute Name --> </div>
+</footer>
+</body>
+
+
+ <script src="js/jquery.knob.js"></script>
+<script src="js/jsplumb1.js"></script>
+<!-- /JS -->
+
+<!--  demo code -->
+<script src="js/demo1.js"></script>
+<script src="js/jogDial.js"></script>
+
+
+</html>
